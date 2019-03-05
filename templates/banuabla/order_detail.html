@@ -1,0 +1,126 @@
+{% extends "banuabla/base.html" %}{% load static banuablatags %}
+{% block title %}Sipariş Detayı{% endblock %}
+{% block head %}
+{#    <link rel="stylesheet" href="{% static "css/order-detail.css" %}">#}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.2.9/mediaelementplayer.min.css" />
+
+{% endblock %}
+{% block body %}
+    <section id="order" class="container window">
+        <h3 class="center-align">Sipariş Detayı</h3>
+        {% if messages %}
+        {% for message in messages %}
+        <div class="col l10 offset-l1">
+            {% if message.tags == "warning" %}
+            <div class="card-panel yellow accent-4 white-text">
+                <i class="material-icons">warning</i><span>{{ message }}</span>
+            </div>
+            {% elif message.tags == "error" %}
+            <div class="card-panel red darken-4 white-text">
+                <i class="material-icons">error</i><span >{{ message }}</span>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+        {% endif %}
+        <h4 class="center-align">Gönderilen Fotoğraflar</h4>
+        <div class="row">
+            <div class="col l10 offset-l1">
+                {% for fal_photo in fal_photos %}{% if not forloop.counter > 1 %}
+                <div class="col l3">
+                    <img src="{{ fal_photo.image.url }}" alt="{{ fal_photo.clean_name }}" class="responsive-img materialboxed">
+                </div>{% endif %}{% if forloop.counter > 1 %}
+                <div class="col l3">
+                    <img src="{{ fal_photo.image.url }}" alt="{{ fal_photo.clean_name }}" class="responsive-img materialboxed">
+                </div>{% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        {% if order.fal_yorumu %}
+        <h4 class="center-align">Fal Yorumunuz</h4>
+        <div class="row">
+            <div class="col l9 offset-l1">
+                <audio preload="none" id="player" width="100%">
+                    <source src="{{ order.fal_yorumu.url }}" type="audio/mpeg">
+                </audio>
+            </div>
+            <div class="col l1">
+                <a class="btn" href="{{ order.fal_yorumu.url }}" alt="{{ order.fal_yorumu.name }}" download>
+                    <i class="fa fa-download"></i> İstersen İndir</a>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if request.user.is_staff %}
+        <h4 class="center-align">Gönderen Bilgisi</h4>
+        <div class="row">
+            <div class="col l10 offset-l1">
+                <div class="card-panel white accent-4 black-text">{% now "Y" as current_year %}
+                    <p>Ad Soyad: {{ order.user.full_name }}</p>
+                    <p>Yaş: {{ current_year|sub:order.user.birth }}</p>
+                    <p>Cinsiyet: {{ order.user.get_gender_display }}</p>
+                    <p>Hakkında: {{ order.user.about|default:"Bilgi girilmemiş..." }}</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <h4 class="center-align">Konuşmalar</h4>
+
+        <div class="row">
+            <ul class="collection col l10 offset-l1">{% for message in order_messages %}
+                <li class="collection-item avatar">
+                    {% if message.user.user_photo %}
+                    <img src="{{ message.user.user_photo.url }}" alt="{{ message.user.full_name }}" class="circle">{% else %}
+                    <img src="{% static "image/empty_profile.jpg" %}" alt="{{ message.user.full_name }}" class="circle">{% endif %}
+                    <a class="title" href="#!">{{ message.user.full_name }}</a>
+                    <p>{{ message.content|escape|linebreaksbr }}</p>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+
+        <div class="row">
+            <div class="col l10 offset-l1">
+                <form id="order_form" action="{% url "order_detail" order.id %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}{% if request.user.is_staff %}
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span>{{ message_form.sound.label }}</span>
+                            {{ message_form.sound }}
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>{% endif %}
+                    <div class="input-field">
+                        <i class="material-icons prefix">mode_edit</i>
+                        {{ message_form.message }}
+                        <label for="{{ message_form.message.id_for_label }}">{{ message_form.message.label }}</label>
+                    </div>
+
+                    <button type="submit" name="fal_gonder" class="btn green">
+                        <i class="material-icons right">send</i> Mesaj Gönder
+                    </button>
+                    {% if not order.order_status and request.user.is_staff %}
+                    <button type="submit" name="fal_teslim" class="btn green">Siparişi Tamamla</button>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}
+{% block extrajs %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.2.9/mediaelement-and-player.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.materialboxed').materialbox();
+
+            $('video, audio').mediaelementplayer();
+        });
+    </script>
+{% endblock %}

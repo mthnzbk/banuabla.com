@@ -1,0 +1,86 @@
+{% extends "banuabla/base.html" %}{% load static %}
+{% block title %}Fal Kredisi Satın Alın{% endblock %}
+{% block head %}
+{% endblock %}
+{% block body %}
+    <section class="container window">
+        <div class="row">
+            <div class="col s12 m6 l3 offset-l2">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{% static "image/fal.jpg" %}">
+                        <span class="card-title"><b>Tadımlık</b></span>
+                        <a id="tadimlik" class="btn-floating btn-large halfway-fab waves-effect waves-light blue" title="Sepete Ekle"><i class="material-icons">shopping_cart</i></a>
+                    </div>
+                    <div class="card-content">
+                        <br>
+                        <p class="des">1 Fal Kredisi: <b>20₺</b></p>
+                        <a target="_blank" href="https://paymes.me/p/kahve_fal_" class="btn red"><i class="far fa-credit-card "></i> Öde</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12 m6 l3">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{% static "image/fal.jpg" %}">
+                        <span class="card-title"><b>Meraklı</b></span>
+                        <a id="merakli" class="btn-floating btn-large halfway-fab waves-effect waves-light blue" title="Sepete Ekle"><i class="material-icons">shopping_cart</i></a>
+                    </div>
+                    <div class="card-content">
+                        <br>
+                        <p class="des">3 Fal Kredisi: <b><span class="cizik">60₺</span></b> <b>55₺</b></p>
+                        <a target="_blank" href="https://paymes.me/p/kahve_fal_0" class="btn red"><i class="far fa-credit-card "></i> Öde</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12 m6 l3">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{% static "image/fal.jpg" %}">
+                        <span class="card-title"><b>Bağımlı</b></span>
+                        <a id="bagimli" class="btn-floating btn-large halfway-fab waves-effect waves-light blue" title="Sepete Ekle"><i class="material-icons">shopping_cart</i></a>
+                    </div>
+                    <div class="card-content">
+                        <br>
+                        <p class="des">5 Fal Kredisi: <b><span class="cizik">100₺</span></b> <b>90₺</b></p>
+                        <a target="_blank" href="https://paymes.me/p/kahve_fal_1" class="btn red"><i class="far fa-credit-card "></i> Öde</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col l9 offset-l2 right-align">
+                <button id="buy-button" class="btn orange darken-2 disabled">
+                    <i class="fas fa-spinner fa-spin" style="display: none"></i> Havale Yap
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col l9 offset-l2">
+                <div class="card-panel light-blue lighten-5">
+                    <img src="{% static "image/ing4.png" %}" style="float: left">
+                    <p style="font-weight: bold;">IBAN: TR380009901813285300100002 <br> ALICI: METEHAN  ÖZBEK</p>
+                    <br>
+                    <h6>Havale/EFT yaparken dikkat etmeniz gerekenler:</h6>
+                    <ul class="browser-default">
+                        <li>Siparişinizin iptal olmaması için havale/EFT ödemenizi 3 iş günü içerisinde gerçekleştirmelisiniz.</li>
+                        <li>Siparişinizin havale/EFT ödemesinin işleme alınması için ödeme esnasında açıklama kısmına sipariş numaranızı mutlaka belirtiniz.</li>
+                        <li>Sipariş numaranızı, siparişinizi tamamladıktan sonra bulunduğunuz sayfada ve tarafınıza iletilen e-postadan görüntüleyebilirsiniz.</li>
+                    </ul>
+                    <h6>Havale/EFT işlemi ne zaman onaylanır?</h6>
+                    <ul class="browser-default">
+                        <li>Yapılan havale/EFT hesaba geçtiği gün içerisinde onaylanır.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+{% block extrajs %}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.7/dist/sweetalert2.all.min.js"></script>
+    <script src="{% static "js/buy.js" %}"></script>
+{% endblock %}

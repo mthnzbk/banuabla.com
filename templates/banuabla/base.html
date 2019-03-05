@@ -1,0 +1,223 @@
+<!DOCTYPE html>{% load static banuablatags %}
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{% static "image/favicon.png" %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <link type="text/css" rel="stylesheet" href="{% static "css/materialize.min.css" %}" media="screen,projection">
+    <link type="text/css" rel="stylesheet" href="{% static "css/style.css" %}">
+    <link rel="manifest" href="/manifest.json">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <header>
+        <ul id="dropdown1" class="dropdown-content">
+            <li><a class="waves-effect waves-light black-text" href="{% url "profile" %}">Profil</a></li>
+            {% if request.user.is_staff %}
+            <li>
+                <a class="waves-effect waves-light black-text" href="{% url "panel" %}">Gelen Siparişler <span class="badge new green" data-badge-caption="yeni">{% gelen_kutusu %}</span></a>
+            </li>
+            {% else %}
+            <li>
+                <a class="waves-effect waves-light black-text" href="{% url "order" %}">Fal Hakkınız: {{ request.user.fal_credit }}</a>
+            </li>
+            {% endif %}
+            <li class="divider" tabindex="-1"></li>
+            <li><a class="waves-effect waves-light black-text" href="{% url "logout" %}">Çıkış</a></li>
+        </ul>
+        <div class="navbar-fixed">
+            <nav class="orange darken-1">
+                <div class="nav-wrapper z-depth-2">
+                    <a class="brand-logo center" href="{% url "home" %}">BanuAbla</a>
+                    <a href="#" data-target="mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+{#                        <li><a href="{% url "blog" %}" class="waves-effect waves-light">Blog</a></li>#}
+                        <li>
+                            <a class="waves-effect waves-light" href="{% url "order" %}">Siparişlerim</a>
+                        </li>
+                        <li>
+                            <a href="https://www.sadeceon.com/ozbekbanu/kahve-faliniza-bakarim-" class="waves-effect waves-light" target="_blank">
+                                Referansım
+                            </a>
+                        </li>
+                        <li><a href="{% url "home" %}#about" class="waves-effect waves-light">Hakkımda</a></li>
+                        {% if request.user.is_authenticated %}
+
+                        <li>
+                            <a href="#" class="nav-profile dropdown-trigger" data-target="dropdown1">{% if request.user.user_photo %}
+                                <img src="/content/{{ request.user.user_photo }}" class="circle" width="48">
+                            </a>{% else %}
+                                <img src="{% static "image/empty_profile.jpg" %}" class="circle" width="48">
+                            </a>
+                                {% endif %}
+                        </li>
+
+                            {% else %}
+                        <li>
+                            <a data-target="login" class="nav-profile" href="{% url "login" %}" title="Giriş">
+                            <img src="{% static "image/empty_profile.jpg" %}" class="circle" width="48">
+                            </a>
+                        </li>
+                            {% endif %}
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <ul id="mobile" class="sidenav">
+        <li>
+            <div class="user-view">
+                <div class="background orange darken-1">
+{#                                <img src="{% static "image/bg.jpg" %}">#}
+                </div>{% if request.user.is_authenticated %}
+                <a href="{% url "profile" %}">{% if request.user.user_photo %}<img class="circle responsive-img" src="/content/{{ request.user.user_photo }}"></a>{% else %}
+                <a href="{% url "profile" %}"><img class="circle responsive-img" src="{% static "image/empty_profile.jpg" %}"></a>{% endif %}
+                <a href="{% url "profile" %}"><span class="white-text name">{{ request.user.full_name }}</span></a>
+                <a href="{% url "profile" %}"><span class="white-text email">{{ request.user.email }}</span></a>{% else %}
+                <a href="{% url "login" %}"><img class="circle responsive-img" src="{% static "image/empty_profile.jpg" %}"></a>
+                <a href="{% url "login" %}"><span class="white-text name">Ziyaretçi</span></a>
+                <a href="{% url "login" %}"><span class="white-text email"></span></a>{% endif %}
+            </div>
+        </li>
+            {% if not request.user.is_authenticated %}
+        <li>
+            <a data-target="login" href="{% url "login" %}" class="waves-effect waves-light sidenav-close">Giriş</a>
+        </li>
+            {% elif request.user.is_staff %}
+        <li>
+            <a class="waves-effect" href="{% url "panel" %}">Gelen Siparişler<span class="badge new green" data-badge-caption="yeni">{% gelen_kutusu %}</span></a>
+        </li>
+            {% else %}
+        <li>
+            <a class="waves-effect" href="{% url "order" %}">Siparişlerim</a>
+        </li>
+        <li>
+            <a class="waves-effect" href="{% url "buy" %}">Fal Kredisi Satın Al</a>
+        </li>
+            {% endif %}
+        <li>
+            <a class="waves-effect" href="#!">Fal Hakkınız: {{ request.user.fal_credit }}</a>
+        </li>
+        <li><div class="divider"></div></li>
+{#        <li><a class="subheader">Subheader</a></li>#}
+        <li><a class="waves-effect sidenav-close" href="{% url "home" %}#how">Nasıl Çalışıyor</a></li>
+        <li><a class="waves-effect sidenav-close" href="{% url "home" %}#messages">Müşteri Yorumları</a></li>
+        <li>
+            <a href="https://www.sadeceon.com/ozbekbanu/kahve-faliniza-bakarim-" class="waves-effect" target="_blank">
+                Referansım
+            </a>
+        </li>
+        <li><a class="waves-effect sidenav-close" href="{% url "home" %}#about">Hakkımda</a></li>
+        <li><a class="waves-effect sidenav-close" href="{% url "home" %}#contact">Bana Ulaşın</a></li>
+{#        <li><a class="waves-effect" href="{% url "blog" %}">Blog</a></li>#}
+        <li><a class="waves-effect" href="{% url "sss" %}">Sık Sorulan Sorular</a></li>
+        <li><a class="waves-effect" href="{% url "gizlilik" %}">Kullanım Koşulları & Gizlilik</a></li>
+    </ul>
+    {% url "order_add" as order_add %}
+    {% if request.user.is_authenticated and not request.user.is_staff and request.get_full_path != order_add %}
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large red pulse" href="{% url "order_add" %}" title="Fal Baktır">
+            <i class="large material-icons">add</i>
+        </a>
+    </div>
+    {% endif %}
+
+
+    <main>
+        {% block body %}{% endblock %}
+    </main>
+
+    <footer class="page-footer orange darken-2">
+        <div class="container">
+            <div class="row">
+                <div class="col l4 s12 m6">
+                    <h5 class="white-text">Sosyal</h5>
+                    <ul class="yanyana">
+                        <li><a href="https://www.facebook.com/ozbekbanu.abla/" class="grey-text text-lighten-3" title="Facebook">
+                            <i class="fab fa-facebook fa-2x"></i></a></li>
+                        <li><a href="https://www.instagram.com/banu.abla/" class="grey-text text-lighten-3" title="Instagram">
+                            <i class="fab fa-instagram fa-2x"></i></a></li>
+                        <li><a href="https://twitter.com/banu_abla" class="grey-text text-lighten-3" title="Twitter">
+                            <i class="fab fa-twitter fa-2x"></i></a></li>
+                        <li><a href="https://www.youtube.com/channel/UCjnA1dfA6Rdra19_XA8-YLg" class="grey-text text-lighten-3" title="Youtube">
+                            <i class="fab fa-youtube fa-2x"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col l4 s12 m6">
+                    <h5 class="white-text">Ödeme Yöntemleri</h5>
+                    <ul class="yanyana">
+{#                        <li><a href="#" class="grey-text text-lighten-3" title="Visa"><i class="fab fa-cc-visa fa-2x"></i></a></li>#}
+{#                        <li><a href="#" class="grey-text text-lighten-3" title="MasterCard"><i class="fab fa-cc-mastercard fa-2x"></i></a></li>#}
+                        <li><a class="grey-text text-lighten-3 payment" title="Havale&EFT"><i class="fas fa-money-bill fa-2x"></i></a></li>
+{#                        <li><a href="#" class="grey-text text-lighten-3" title="Mobil Ödeme"><i class="fas fa-mobile-alt fa-2x"></i></a></li>#}
+                    </ul>
+                </div>
+                <div class="col l4 s12 m6">
+                    <h5 class="white-text">Bağlantılar</h5>
+                    <ul>
+                        <li><a class="grey-text text-lighten-3" href="{% url "sss" %}">Sıkça Sorulan Sorular</a></li>
+                        <li><a class="grey-text text-lighten-3" href="{% url "gizlilik" %}">Kullanım Koşulları & Gizlilik Politikası</a></li>
+{#                        <li><a class="grey-text text-lighten-3" href="{% url "blog" %}">Blog</a></li>#}
+                        <li>
+                            <a href="https://www.sadeceon.com/ozbekbanu/kahve-faliniza-bakarim-" class="grey-text text-lighten-3" target="_blank">
+                                Referansım
+                            </a>
+                        </li>
+                        <li><a class="grey-text text-lighten-3" href="{% url "home" %}#about">Hakkımda</a></li>
+                        <li><a class="grey-text text-lighten-3" href="{% url "home" %}#contact">İletişim</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                © 2018 BanuAbla
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static "js/jquery-3.3.1.min.js" %}"></script>
+    <script src="{% static "js/materialize.min.js" %}"></script>
+    <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async></script>
+    <script>
+        var OneSignal = window.OneSignal || [];
+        OneSignal.push(function() {
+            OneSignal.init({
+                appId: "d91ca1dc-1d81-401b-9552-3176ef89bd9d",
+                autoRegister: true,
+            });
+            {% if request.user.is_authenticated %}
+            OneSignal.getUserId(function (id) {
+                if(id != null){
+                    OneSignal.getTags(function (tags) {
+                        if(!("eposta" in tags)){
+                            OneSignal.sendTag("eposta", "{{ request.user.email }}");
+                        }
+                    });
+                }
+            });
+            {% endif %}
+
+        });
+
+        $(document).ready(function(){
+            $('.modal').modal();
+            $('.parallax').parallax();
+            $('input[type=email], input[type=password], input[type=text], textarea').characterCounter();
+            $('.sidenav').sidenav();
+            $('.scrollspy').scrollSpy();
+            $('.dropdown-trigger').dropdown({
+                constrainWidth: false,
+                coverTrigger: false
+            });
+        });
+    </script>
+    {% block extrajs %}{% endblock %}
+</body>
+</html>

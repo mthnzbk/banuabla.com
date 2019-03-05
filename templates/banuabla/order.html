@@ -1,0 +1,42 @@
+{% extends "banuabla/base.html" %}{% load static %}
+{% block title %}Siparişleriniz{% endblock %}
+{% block head %}
+{% endblock %}
+{% block body %}
+
+    <section id="order" class="container window">
+        <div class="row">
+            <div class="col l8 offset-l2">
+                <table class="highlight">
+                    <thead>
+                        <tr>
+                            <th>Sipariş No</th>
+                            <th>Sipariş Tarihi</th>
+                            <th>Tahmini Teslim</th>
+                            <th>Bakılma Durumu</th>
+                            <th>Durum</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for order in orders %}
+                        <tr>
+                            <td><a href="{% url "order_detail" order.id %}">SP{{ order.id }}</a></td>
+                            <td><a href="{% url "order_detail" order.id %}">{{ order.order_date }}</a></td>{% if order.order_status %}
+                            <td>-</td>
+                            <td>-</td>{% else %}
+                            <td>{{ order.tahmini }}</td>
+                            <td>{{ order.started }}</td>{% endif %}
+                            <td><span class="new badge {% if order.order_status %}green{% else %}orange{% endif %}" data-badge-caption="{{ order.status }}"></span></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% if not orders %}
+                <p class="center">Henüz sipariş vermediniz.</p>{% endif %}
+                <br>
+                <a class="btn waves-effect" href="{% url "order_add" %}">Sipariş Ver</a>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

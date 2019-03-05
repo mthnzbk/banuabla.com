@@ -1,0 +1,55 @@
+{% extends "banuabla/base.html" %}{% load static %}
+{% block title %}Giriş Yap{% endblock %}
+{% block head %}
+{% endblock %}
+{% block body %}
+    <section class="container window">
+        <div class="row ">
+            <div class="col l10 offset-l1">
+                <h3 class="center-align">Giriş Yap</h3>
+                <div class="card-panel">
+                    <form id="login_form" action="{% url "login" %}" method="post">{% csrf_token %}
+                        <div class="input-field">
+                            <i class="material-icons prefix">email</i>
+                            {{ login_form.email }}
+                            <label for="{{ login_form.email.id_for_label }}">{{ login_form.email.label }}</label>
+                        </div>
+                        <div class="input-field">
+                            <i class="material-icons prefix">lock</i>
+                            {{ login_form.password }}
+                            <label for="{{ login_form.password.id_for_label }}">{{ login_form.password.label }}</label>
+                        </div>
+
+                        <div class="input-field center-align">
+                            <button id="login_button" class="btn green g-recaptcha waves-light waves-effect" data-sitekey="6LfmEHIUAAAAAJUQ-E0GfZaGdxbQwrM6e6oOkB2j"
+                                data-callback="onSubmit" type="submit">Giriş Yap</button>
+                        </div>
+
+                        <div class="input-field center-align">
+                            <a href="{% url "register" %}">Kayıt Ol</a> - <a href="{% url "forgotpasswd" %}">Şifremi Unuttum</a>
+                        </div>
+                    </form>
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.tags == "success" %}
+                            <div class="card-panel green accent-4 white-text">
+                                <i class="material-icons">check_circle</i><span>{{ message }}</span>
+                            </div>{% else %}
+                            <div class="card-panel red darken-4 white-text">
+                                <i class="material-icons">error</i><span>{{ message }}</span>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block extrajs %}
+    <script>
+        function onSubmit(token) {
+            document.getElementById("login_form").submit();
+        }
+    </script>
+{% endblock %}

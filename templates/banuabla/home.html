@@ -1,0 +1,225 @@
+{% extends "banuabla/base.html" %}{% load static %}
+{% block title %}Banu Abla'dan Çevirim içi Kahve Falı Baktırın.{% endblock %}
+{% block head %}
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    <meta name="description" content="Gerçek birinden, yılların deneyimine sahip Banu Abla'dan kahve falı baktırın.">
+    <meta name="keywords" content="türk kahvesi, kahve falı, fal baktır, gerçek kahve falı, kahve falı baktır">
+    <meta name="robots" content="index, nofollow">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:title" content="Banu Abla'dan Çevirim içi Kahve Falı Baktırın.">
+    <meta property="og:description" content="Gerçek birinden, yılların deneyimine sahip Banu Abla'dan kahve falı baktırın.">
+    <meta property="og:image" content="{% static "image/bg.jpg" %}">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-127953461-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-127953461-1');
+    </script>
+{% endblock %}
+{% block body %}
+    <header id="header" class="parallax-container">
+        <div class="container">
+            <div class="row">
+                <div class="col l8 offset-l2 center m10 offset-m1">
+                    <h2 class="white-text">Üç Vakte Kadar</h2>
+                    <h5 class="white-text">Kahveni İç, Falını Kapat, Fotoğrafları Yolla</h5>
+                    <a href="{% url "order_add" %}" class="btn btn-large green waves-effect waves-light">Fal Baktır</a>
+                    <br><br>
+                    <a target="_blank" href="https://www.facebook.com/share.php?u={{ request.build_absolute_uri }}"
+                    class="btn waves-light waves-effect" style="background-color: #4267b2">
+                        <i class="fab fa-facebook"></i> Paylaş
+                    </a>
+                    <a href="https://twitter.com/intent/tweet?text=Banu Abla'dan Çevirim içi Kahve Falı Baktırın. - {{ request.build_absolute_uri|iriencode }}"
+                    class="btn waves-light waves-effect" style="background-color: #00aced" target="_blank">
+                        <i class="fab fa-twitter"></i> Paylaş
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="parallax"><img src="{% static "image/bg.jpg" %}"></div>
+    </header>
+
+    <section id="how">
+        <div class="container">
+            <div class="row">
+                <h2 class="center">Nasıl Çalışıyor</h2>
+                <div class="col l4 m10 offset-m1">
+                    <div class="card medium">
+                        <div class="card-image">
+                            <img src="{% static "image/kahve.jpg" %}">
+                            <span class="card-title"><strong>Köpüklü Türk Kahveni İç</strong></span>
+                        </div>
+                        <div class="card-content">
+                            <p>Köpüklü kahveni içtikten sonra tabağını üstüne kapatıp ters çevirin. Parmağınız ile fincanın tabanına
+                            dokunduğunuz da ılık geldiyse fincanınız fal için hazırdır.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col l4 m10 offset-m1">
+                    <div class="card medium">
+                        <div class="card-image">
+                            <img src="{% static "image/tabak.jpg" %}">
+                            <span class="card-title"><strong>Fincanın Fotoğraflarını Çekin</strong></span>
+                        </div>
+                        <div class="card-content">
+                            <p>Soğuduktan sonra açtığınız fincanın tam üstten ışıklı bir ortamda
+                                farklı açılardan fotoğraflarını çekiyorsun. Fincan tabağını da eğip akmış halinin fotoğrafını çekmeyi
+                            unutmuyorsun.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col l4 m10 offset-m1">
+                    <div class="card medium">
+                        <div class="card-image">
+                            <img src="{% static "image/tabak.jpg" %}">
+                            <span class="card-title"><strong>Falınızı Gönderin</strong></span>
+                        </div>
+                        <div class="card-content">
+                            <p>Sipariş oluşturup çektiğiniz fotoğrafları ve varsa mesajınızı ekleyin ve siparişinizi gönderin.
+                            Fal yorumunuz ses kaydı olarak oluşturduğunuz sipariş üzerinden gönderilecektir.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="messages">
+        <div class="container">
+            <div class="row">
+                <h2 class="center">Müşteri Yorumları</h2>
+                <div id="comment-box" class="col l8 offset-l2 center m10 offset-m1">
+                    <i class="fa fa-quote-left"></i>
+                    <p id="comment">Ağzınıza sağlık umarım dediğiniz gibi olur, teşekkür ederim :)</p>
+                    <i class="fa fa-quote-right"></i>
+                    <p id="comment-writer">Edepali D.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div id="about" class="col l5 m10 offset-m1">
+                    <h2 class="center">Hakkımda</h2>
+                    <p>Doğma büyüme İstanbullu'yum. 1989 yılında Üsküdar Mithatpaşa Kız Teknik ve Meslek Lisesi Resim Bölümü'nü
+                    bitirdikten sonra kısa bir dönem emlakçılık işiyle uğraştım. Bunun yanı sıra annemin ev toplantılarında
+                    gelen misafirlerine annemden aldığım "el" ile kahve falına bakmaya başladım. Baktığım falların çoğunun
+                    çıktığını görünce bu işi daha da ele aldım ve 25 seneden fazladır baktıran kişilerin ardı arkası kesilmedi.</p>
+                    <p>2015 yılında Ankara'ya yerleştim ve o tarihten itibaren fal baktırmak isteyen arkadaşlarım WhatsApp ile fincan
+                    fotoğraflarını attılar. Bu süreçte yaşımdan dolayı sürekli bir iş bulamadım. Bir gün eşimin bana "Seni bir siteye
+                    üye yaptım orada şansını bir dene. Tutarsa sana bir site açarız." demesiyle bu işi meslek olarak ele almaya başladım.
+                    Bu site üzerinde verdiğim <a href="https://www.sadeceon.com/ozbekbanu/kahve-faliniza-bakarim-">ilan</a>
+                    ile yüzlerce kişiye fal yorumladım. Bu başarımdan dolayı eşim bu siteyi bana hediye
+                    olarak sundu. Amacım ev ekonomisine katkı sağlamak ve insanları baktığım fallarla mutlu etmek.</p>
+                </div>
+
+                <div id="contact" class="col l5 offset-l2 m10 offset-m1">
+                    <h2 class="center">Bana Ulaşın</h2>
+                    <form id="contact_form" action="{% url "contact" %}" method="post">
+                        {% csrf_token %}
+                        <div class="input-field">
+                            <i class="material-icons prefix">account_circle</i>
+                            {{ contact_form.full_name }}
+                            <label for="{{ contact_form.full_name.id_for_label }}">{{ contact_form.full_name.label }}</label>
+                        </div>
+                        <div class="input-field">
+                            <i class="material-icons prefix">email</i>
+                            {{ contact_form.guest_email }}
+                            <label for="{{ contact_form.guest_email.id_for_label }}">{{ contact_form.guest_email.label }}</label>
+                        </div>
+                        <div class="input-field">
+                            <i class="material-icons prefix">subject</i>
+                            {{ contact_form.subject }}
+                            <label for="{{ contact_form.subject.id_for_label }}">{{ contact_form.subject.label }}</label>
+                        </div>
+                        <div class="input-field">
+                            <i class="material-icons prefix">message</i>
+                            {{ contact_form.message }}
+                            <label for="{{ contact_form.message.id_for_label }}">{{ contact_form.message.label }}</label>
+                        </div>
+                        <button id="contact_button" type="submit" class="btn green g-recaptcha waves-effect waves-light disabled" data-sitekey="6LfmEHIUAAAAAJUQ-E0GfZaGdxbQwrM6e6oOkB2j"
+data-callback="onSubmit">Gönder</button>
+                    </form>
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.tags == "success" %}
+                            <div class="card-panel green accent-4 white-text">
+                                <i class="material-icons">check_circle</i><span>{{ message }}</span>
+                            </div>{% else %}
+                            <div class="card-panel red darken-4 white-text">
+                                <i class="material-icons">error</i><span>{{ message }}</span>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+{% block extrajs %}
+    <script>
+        function onSubmit(token) {
+            document.getElementById("contact_form").submit();
+        }
+
+        $().ready(function () {
+            $.getJSON("/comments/", function (comments) {
+                var count = 1;
+                var index = comments.length -1;
+
+                setInterval(function () {
+
+                    if(count !== index){
+                        $("#comment").animate({
+                            opacity: 0
+                        }, "slow", function () {
+                            $("#comment").html(comments[count]["comment"]).animate({
+                            opacity: 1
+                            });
+                        });
+
+                        $("#comment-writer").animate({
+                            opacity: 0
+                        }, "slow", function () {
+                            $("#comment-writer").html(comments[count]["name"]).animate({
+                            opacity: 1
+                            });
+                        });
+
+                        ++count;
+
+                    } else {
+                        count = 0;
+                        }
+
+                }, 7000);
+
+            });
+
+            //iletişim formu
+            $("#contact_form").keyup(function () {
+                var full_name = $("#id_full_name").val().length;
+                var guest_email =  $("#id_guest_email").val().length;
+                var subject = $("#id_subject").val().length;
+                var message = $("#id_message").val().length;
+
+                if (full_name && guest_email && subject && message) {
+                    $("#contact_button").removeClass("disabled");
+                } else if (!$("#contact_button").hasClass("disabled")) {
+                    $("#contact_button").addClass("disabled");
+                }
+            })
+        });
+    </script>
+
+{% endblock %}

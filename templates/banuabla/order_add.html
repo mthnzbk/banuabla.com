@@ -1,0 +1,88 @@
+{% extends "banuabla/base.html" %}{% load static %}
+{% block title %}Sipariş Verin{% endblock %}
+{% block head %}
+{% endblock %}
+{% block body %}
+
+    <section id="order"  class="container">
+        <h3 class="center-align">Falını Gönder</h3>
+        <h5 class="center-align">Tabak ve Fincan fotoğraflarını seçin</h5>
+        <div class="row">
+            {% if messages %}
+            {% for message in messages %}
+            <div class="col l10 offset-l1">
+                {% if message.tags == "warning" %}
+                <div class="card-panel yellow accent-4 white-text">
+                    <i class="material-icons">warning</i><span>{{ message }}</span>
+                </div>
+                {% elif message.tags == "error" %}
+                <div class="card-panel red darken-4 white-text">
+                    <i class="material-icons">error</i><span >{{ message }}</span>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            {% endif %}
+            <div class="col l10 offset-l1">
+                <div class="row">
+                    <form id="order_form" action="{% url "order_add" %}" method="post" enctype="multipart/form-data">
+                        <div class="file-field input-field">
+                            <div class="btn">
+                                <span>Fincan Fotoğrafı</span>
+                                <input type="file" name="fal1">
+                            </div>
+                                <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text">
+                            </div>
+                        </div>
+
+                        <div class="file-field input-field">
+                            <div class="btn">
+                                <span>Fincan Fotoğrafı</span>
+                                <input type="file" name="fal2">
+                            </div>
+                                <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text">
+                            </div>
+                        </div>
+
+                        <div class="file-field input-field">
+                            <div class="btn">
+                                <span>Fincan Fotoğrafı</span>
+                                <input type="file" name="fal3">
+                            </div>
+                                <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text">
+                            </div>
+                        </div>
+
+                        <div class="file-field input-field">
+                            <div class="btn">
+                                <span>Fincan Fotoğrafı</span>
+                                <input type="file" name="fal4">
+                            </div>
+                                <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text">
+                            </div>
+                        </div>
+                        <p class=" blue-grey-text lighten-4">En az bir fincan fotoğrafı ile kesinlikle tabak fotoğrafını yükleyin. Lütfen deseni olan fincan ve tabak kullanmayın.</p>
+                        {% csrf_token %}
+                        <div class="input-field">
+                            <i class="material-icons prefix">mode_edit</i>
+                            <textarea class="materialize-textarea" name="message" id="message"></textarea>
+                            <label for="message">Falda ne görürsem onu yorumluyorum. Ancak merak ettikleriniz var ise belirtiniz.</label>
+                        </div>
+
+                        <button type="submit" name="fal_gonder" class="btn green">
+                            <i class="material-icons right">send</i>Falı Gönder
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}
+{% block extrajs %}
+{% endblock %}

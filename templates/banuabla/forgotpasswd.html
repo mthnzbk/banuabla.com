@@ -1,0 +1,43 @@
+{% extends "banuabla/base.html" %}{% load static %}
+{% block title %}Parola Sıfırla{% endblock %}
+{% block head %}
+{% endblock %}
+{% block body %}
+    <section class="container window">
+        <div class="row ">
+            <div class="col l10 offset-l1">
+                <h3 class="center-align">Parola Sıfırla</h3>
+                <div class="card-panel">
+                    <form id="password_form" action="{% url "forgotpasswd" %}" method="post">{% csrf_token %}
+                        <div class="input-field">
+                            <i class="material-icons prefix">email</i>
+                            {{ forgot_form.forgot_email }}
+                            <label for="{{ forgot_form.forgot_email.id_for_label }}">{{ forgot_form.forgot_email.label }}</label>
+                        </div>
+                        <div class="input-field center-align">
+                            <button class="btn green g-recaptcha waves-effect waves-light" data-sitekey="6LfmEHIUAAAAAJUQ-E0GfZaGdxbQwrM6e6oOkB2j" data-callback="onSubmit" type="submit">Şifremi Sıfırla</button>
+                        </div>
+                    </form>
+                    {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li class="{{ message.tags }}">
+                            {% if message.tags == "success" %}<i class="material-icons prefix">check_circle</i>{% else %}
+                            <i class="material-icons prefix">report_problem</i>{% endif %}
+                            {{ message }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block extrajs %}
+    <script>
+        function onSubmit(token) {
+            document.getElementById("password_form").submit();
+        }
+    </script>
+{% endblock %}

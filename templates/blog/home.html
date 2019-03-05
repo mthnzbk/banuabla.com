@@ -1,0 +1,51 @@
+{% extends "banuabla/base.html" %}{% load static %}
+{% block title %}Banu Abla'nın Blogu{% endblock %}
+{% block head %}
+    <meta name="description" content="Banu Abla'nın blog sayfası.">
+    <meta name="keywords" content="kahve falı, türk kahvesi, fal baktır, gerçek kahve falı, kahve falı baktır">
+    <meta name="robots" content="index, follow">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:title" content="Banu Abla'nın Blogu">
+    <meta property="og:description" content="Banu Abla'nın paylaşımları.">
+    <meta property="og:image" content="{% static "image/bg.jpg" %}">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    <link rel="stylesheet" href="{% static "css/blog.css" %}">
+{% endblock %}
+{% block body %}
+    <section class="container window">
+        <div class="row">
+            <div class="col l10 offset-l1">
+                <div class="card-panel">
+                    {% for post in posts %}
+                    <article>
+                        <h4><a class="black-text" href="{% url "post_view" post.title_url %}">{{ post.title }}</a></h4>
+                        <p class="grey-text">Yazan: {{ post.author.full_name }}, Tarih: {{ post.created_date|date:"d F Y" }}</p>
+                        {{ post.content|safe }}
+                    </article>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            {% if posts.has_next and posts.has_previous %}
+            <div class="col l2 offset-l4 m4 offset-m2">
+                <a href="{% url "page_view" posts.next_page_number %}">Önceki Sayfa</a>
+            </div>
+
+            <div class="col l2 m4">
+                <a href="{% url "page_view" posts.previous_page_number %}" class="text-right">Sonraki Sayfa</a>
+            </div>
+            {% elif posts.has_next %}
+            <div class="col l2 offset-l4 m4 offset-m2">
+                <a href="{% url "page_view" posts.next_page_number %}">Önceki Sayfa</a>
+            </div>
+            {% elif posts.has_previous %}
+            <div class="col l2 offset-l6 m4 offset-m4">
+                <a href="{% url "page_view" posts.previous_page_number %}" class="text-right">Sonraki Sayfa</a>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+
+{% endblock %}

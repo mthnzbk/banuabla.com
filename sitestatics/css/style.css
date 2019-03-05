@@ -1,0 +1,110 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.nav-profile {
+    height: 64px; padding-top: 8px;
+}
+
+.window {
+    margin-top: 16px;
+}
+
+#header {
+    height: 100vh;
+}
+
+
+#how {
+    padding-top: 12%;
+    padding-bottom: 6%;
+}
+
+#messages {
+    padding-top: 6%;
+    padding-bottom: 12%;
+}
+
+#header .container {
+    margin-top: 25vh;
+    height: 25vh;
+}
+
+#about, #contact {
+    padding-top: 32px;
+}
+
+@media screen and (max-width: 600px) {
+    #header .container {
+        height: 0;
+        margin-top: 10vh;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    #header .container {
+        height: 0;
+        margin-top: 0;
+    }
+}
+
+
+#comment, #comment-writer {
+    font-style: italic;
+    font-size: x-large;
+}
+
+
+.yanyana {
+    list-style: none outside none;
+}
+
+.yanyana li {
+    position: relative;
+    display: inline;
+    margin: 5px;
+}
+
+.card-panel i, .card-panel img, .card-panel p, .card-panel span {
+    vertical-align: middle !important;
+    margin: auto 5px;
+
+}
+
+.card-content .des {
+    font-size: large;
+}
+
+.card-content b span{
+    color: #000000;
+    text-decoration: none;
+    position: relative;
+}
+
+.card-title {
+    width: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.card-content b span:before {
+      content: " ";
+      display: block;
+      width: 100%;
+      border-top: 3px solid #ff0000;
+      height: 12px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      transform: rotate(-25deg);
+}
+
+/*.modal {*/
+    /*overflow-y: hidden !important;*/
+    /*border-radius: 5px;*/
+/*}*/

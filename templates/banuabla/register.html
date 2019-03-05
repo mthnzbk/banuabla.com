@@ -1,0 +1,75 @@
+{% extends "banuabla/base.html" %}{% load static %}
+{% block title %}Kayıt Ol{% endblock %}
+{% block head %}
+{% endblock %}
+{% block body %}
+    <section class="container window">
+        <div class="row ">
+            <div class="col l10 offset-l1">
+                <h3 class="center-align">Kayıt Ol</h3>
+                <div class="card-panel">
+                    <form id="register_form" action="{% url "register" %}?{{ request.GET.urlencode }}" method="post">{% csrf_token %}
+                        <div class="input-field">
+                            <i class="material-icons prefix">email</i>
+                            {{ register_form.user_email }}
+                            <label for="{{ register_form.user_email.id_for_label }}">{{ register_form.user_email.label }}</label>
+                        </div>
+                        <div class="input-field">
+                            <i class="material-icons prefix">lock</i>
+                            {{ register_form.user_password }}
+                            <label for="{{ register_form.user_password.id_for_label }}">{{ register_form.user_password.label }}</label>
+                        </div>
+                        <div class="input-field">
+                            <i class="material-icons prefix">lock</i>
+                            {{ register_form.user_password2 }}
+                            <label for="{{ register_form.user_password2.id_for_label }}">{{ register_form.user_password2.label }}</label>
+                        </div>
+                        <div class="input-field">
+                            <label>
+                                <input type="checkbox" id="contrat">
+                                <span><a target="_blank" href="{% url "gizlilik" %}">Kullanıcı Sözleşmesi</a>'ni onaylıyorum</span>
+                            </label>
+                        </div>
+                        <br><br><br>
+                        <div class="input-field center-align">
+                            <button id="rebutton" class="btn green g-recaptcha waves-effect waves-light disabled" data-sitekey="6LfmEHIUAAAAAJUQ-E0GfZaGdxbQwrM6e6oOkB2j" data-callback="onSubmit" type="submit">Kayıt Ol</button>
+                        </div>
+                    </form>
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.tags == "success" %}
+                            <div class="card-panel green accent-4 white-text">
+                                <i class="material-icons">check_circle</i><span>{{ message }}</span>
+                            </div>{% else %}
+                            <div class="card-panel red darken-4 white-text">
+                                <i class="material-icons">error</i><span>{{ message }}</span>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block extrajs %}
+    <script>
+        function onSubmit(token) {
+            document.getElementById("register_form").submit();
+        }
+
+        $(function () {
+            $("#register_form").on("keydown", function (event) {
+                var keyCode = event.keyCode || event.which;
+                if (keyCode === 13) {
+                    event.preventDefault();
+                }
+            });
+
+            $("#contrat").click(function () {
+                $("#rebutton").toggleClass("disabled");
+            });
+
+        });
+    </script>
+{% endblock %}

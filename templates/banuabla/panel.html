@@ -1,0 +1,60 @@
+{% extends "banuabla/base.html" %}{% load static %}
+{% block title %}Gelen Siparişler{% endblock %}
+{% block head %}
+{% endblock %}
+{% block body %}
+{% csrf_token %}
+    <section id="order" class="container window">
+        <div class="row">
+            <div class="col l8 offset-l2">
+                <table class="highlight">
+                    <thead>
+                        <tr>
+                            <th>Sipariş No</th>
+                            <th>Müşteri</th>
+                            <th>Sipariş Tarihi</th>
+                            <th>Bakılma Durumu</th>
+                            <th>Durum</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for order in orders %}
+                        <tr>
+                            <td><a href="{% url "order_detail" order.id %}">SP{{ order.id }}</a></td>
+                            <td><a href="{% url "panel_user" order.user.id %}">{{ order.user.full_name }}</a></td>{% if order.order_status %}
+                            <td>-</td>
+                            <td>-</td>{% else %}
+                            <td>{{ order.tahmini }}</td>
+                            <td>{{ order.started }}</td>{% endif %}
+                            <td><span class="badge new {% if order.order_status %}green{% else %}orange{% endif %}" data-badge-caption="{{ order.status }}"></span></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% if not orders %}
+                <p class="center">Henüz sipariş yok.</p>{% endif %}
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block extrajs %}
+    <script type="text/javascript">
+    $(".fal-bak").click(function () {
+        $(this).parent().prepend("<i class=\"fa fa-check-square-o text-success\"></i>");
+        var post_href = $(this).next().attr("href");
+        var csrf_token = $("input[name=csrfmiddlewaretoken]").val();
+
+        $.post(post_href, {"csrfmiddlewaretoken": csrf_token, "start": "start"}, function (data) {
+            if (data == "natamam") {
+                alert("Bir sorun var!");
+
+            }
+        })
+
+        $(this).remove();
+
+     })
+    </script>
+{% endblock %}

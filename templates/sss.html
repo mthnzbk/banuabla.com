@@ -1,0 +1,53 @@
+{% extends "banuabla/base.html" %}{% load static %}
+{% block title %}Sık Sorulan Sorular{% endblock %}
+{% block head %}
+    <style>
+        a:hover {
+            text-decoration: none;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <section class="container window">
+            <div class="row ">
+                <div class="col l10 offset-l1">
+                    <div class="card-panel">
+                        <h3 class="center-align">Sık Sorulan Sorular</h3>
+                        <h4>Nasıl Fal Baktırabilirim?</h4>
+                        <p>Bu <a href="{% url "home" %}#how">bağlantıdan</a> detaya ulaşabilirsin. Yorumunuz yapıldığında e-posta ile bilgilendirileceksin.
+                            Ya da <a href="{% url "order" %}">sipariş</a> sayfandan fal durumunu takip edebilirsin.</p>
+
+                        <h4>Nasıl Fal Kredisi Alabilirim?</h4>
+                        <p>Fal kredilerini <a href="{% url "buy" %}">Fal Paketleri</a> bölümünden seçtiğiniz pakete tıklayarak satın alabilirsin.</p>
+
+                        <h4>Fal Puanı Nedir?</h4>
+                        <p>Fal Puanı, çeşitli yollarla kazanılabilen, sana Fal Kredisi kazandıran bir sistemdir.</p>
+
+                        <h4>Nasıl Fal Puanı Kazanabilirim?</h4>
+                        <p>Fal Puanı kazanma yolların:</p>
+                            <ol>
+                                <li>Referansın ile üye olan herkes, her fal baktırdığında sana 1 puan kazandırır.</li>
+                                <li>Her fal baktırdığında, fal yorumun teslim edildikten sonra 1 puan kazanırsın.</li>
+                                <li>Banu Abla tarafından bazı zamanlarda yapılan etkinlikler ile birkaç puan kazanabilirsin.</li>
+                            </ol>
+                            <p>Topladığın her 20 Fal Puanı 1 Fal Kredisi değerindedir.</p>
+
+                        <h4>Nasıl Ödeme Yapabilirim?</h4>
+                        <p>Banu Abla' ya 3 farklı şekilde güvenli ödeme yapabilirsin:
+                            <ol>
+                                <li>Mobil Ödeme: Ödeme adımında Mobil Ödeme'yi seçerek cep telefonu numaranı girerek ve gelen sms'i onaylayarak ödeme yapabilirsin.</li>
+                                <li>Kredi Kartı: Kredi Kartı ile 3D secure yöntemiyle güvenli bir şekilde ödeme yapabilirsin.</li>
+                                <li>Havale/EFT: Siparişinizi verdikten sonra havale/eft açıklamasına sipariş numaranızı yazmalısınız. Bize bilgisi ulaştığı zaman fal krediniz hesabınıza yüklenecektir.</li>
+                                <li>Fal Puanı: Biriktirdiğin fal puanların ile ücretsiz olarak fal kredisi alabilirsin.</li>
+                            </ol>
+                        </p>
+
+                        <h4>Sesli Yorum Nedir?</h4>
+                        <p>Banu Abla, senden gelen falları daha samimi olması açısından ses kaydı olarak yorumlar.
+                           Sen de istersen site üzerinden, istersen cihazına indirerek keyifle dinlersin.</p>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+{% endblock %}

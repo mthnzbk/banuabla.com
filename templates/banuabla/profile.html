@@ -1,0 +1,120 @@
+{% extends "banuabla/base.html" %}{% load static %}
+{% block title %}Profil Sayfanız{% endblock %}
+{% block head %}
+{% endblock %}
+{% block body %}
+    <section class="container window">
+        <div class="row">
+            {% if not request.user.is_verify %}
+            <div class="col l10 offset-l1">
+                <div class="card-panel red darken-4">
+                    <span class="white-text">Üyeliğiniz aktif değil. Lütfen gelen e-postadan üyeliğinizi aktif edin. E-posta almadıysanız
+                    tekrar aktifleştirme e-postası almanız için <a id="apply_mail" href="#">tıklayın</a>.</span>
+                </div>
+            </div>{% endif %}
+
+            {% if messages %}
+            {% for message in messages %}
+            <div class="col l10 offset-l1">
+                {% if message.tags == "warning" %}
+                <div class="card-panel yellow accent-4 white-text">
+                    <i class="material-icons">warning</i><span>{{ message }}</span>
+                </div>
+                {% elif message.tags == "error" %}
+                <div class="card-panel red darken-4 white-text">
+                    <i class="material-icons">error</i><span >{{ message }}</span>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            <div id="activate_modal" class="modal">
+                <div class="modal-content">
+                    <p>Aktivasyon postası gönderildi.</p>
+                </div>
+            </div>
+
+            <div class="profile-photo col l3 offset-l1 center m4 offset-m4 s10 offset-s1">{% if request.user.user_photo %}
+                <img src="/content/{{ request.user.user_photo }}" class="circle" alt="{{ request.user.full_name }}" width="192">
+                {% else %}<img src="{% static "image/empty_profile.jpg" %}" class="circle responsive-img" alt="{{ request.user.full_name }}" width="128" height="128">
+                {% endif %}
+                <form name="upload" action="{% url "profile" %}" method="post" enctype="multipart/form-data">{% csrf_token %}
+                <button class="btn green" type="button" id="upload_button">
+                    <i class="fa fa-camera"></i> Fotoğraf Yükle</button>
+                <input id="profile_photo" type="file" style="visibility:hidden" name="user_photo" accept="image/png, image/jpeg, image/gif">
+                </form>
+            </div>
+
+            <div class="col l7 offset-l1 m10 offset-m1 s10 offset-s1">
+                <h4 class="profile-name">{{ request.user.full_name }}</h4>
+                <p>{{ request.user.email }}</p>
+                <p>Fal Krediniz: {{ request.user.fal_credit }}</p>
+                <p>Fal Puanınız: {{ request.user.fal_point }}</p>
+                <p>Referans bağlantınız:
+                    <a id="copy" data-clipboard-text="https://banuabla.com/register/?ref={{ request.user.referanced_link }}" href="#!" onclick="M.toast({html: 'Kopyalandı!'})">banuabla.com/register/?ref={{ request.user.referanced_link }}</a>
+                    <br><small>Kopyalamak için bağlantının üzerine tıklayın.</small></p>
+                <br>
+                <form name="profil" action="{% url "profile" %}" method="post">{% csrf_token %}
+                    <div class="input-field">
+                        {{ profile_form.first_name }}
+                        <label for="{{ profile_form.first_name.id_for_label }}">{{ profile_form.first_name.label }}</label>
+                    </div>
+                    <div class="input-field">
+                        {{ profile_form.last_name }}
+                        <label for="{{ profile_form.last_name.id_for_label }}">{{ profile_form.last_name.label }}</label>
+                    </div>
+                    <div class="input-field">
+                        {{ profile_form.birth }}
+                        <label for="{{ profile_form.birth.id_for_label }}">{{ profile_form.birth.label }}</label>
+                    </div>
+                    <div class="input-field">
+                        {{ profile_form.gender }}
+                        <label for="{{ profile_form.gender.id_for_label }}">{{ profile_form.gender.label }}</label>
+                    </div>
+                    <div class="input-field">
+                        {{ profile_form.about }}
+                        <label for="{{ profile_form.about.id_for_label }}">{{ profile_form.about.label }}</label>
+                    </div>
+                    <div class="input-field">
+                        {{ profile_form.password }}
+                        <label for="{{ profile_form.password.id_for_label }}">{{ profile_form.password.label }}</label>
+                        <small id="{{ profile_form.password.id_for_label }}">
+                          Şifrenizi değiştirmek istemiyorsanız ilgili kısımları boş bırakın.
+                        </small>
+                    </div>
+                    <div class="input-field">
+                        {{ profile_form.password2 }}
+                        <label for="{{ profile_form.password2.id_for_label }}">{{ profile_form.password2.label }}</label>
+                    </div>
+                    <button class="btn green" type="submit">Güncelle</button>
+
+                </form>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+{% block extrajs %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <script>
+        $().ready(function(){
+            new ClipboardJS('#copy');
+
+            $('select').formSelect();
+
+            $("#upload_button").click(function () {
+                $('#profile_photo').click();
+            });
+
+            $("#profile_photo").change(function () {
+                $("form:first").submit();
+            });
+
+            $("#apply_mail").click(function () {
+                $.get("/activate/");
+                $("#activate_modal").modal("open")
+            });
+        });
+    </script>
+{% endblock %}
